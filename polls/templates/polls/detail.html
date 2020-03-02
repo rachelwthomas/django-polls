@@ -1,0 +1,15 @@
+<h1>{{ question.question_text }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<!-- the act of submitting this form will alter data server-side.
+ Whenever you create a form that alters data server-side, use method="post". -->
+<form action="{% url 'polls:vote' question.id %}" method="post">
+{% csrf_token %}
+{% for choice in question.choice_set.all %}
+<!-- displays a radio button for each choice -->
+    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+  <!-- for loop counter indecates ho many times the for tag has gone through it's loop -->
+    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+{% endfor %}
+<input type="submit" value="Vote">
+</form>
